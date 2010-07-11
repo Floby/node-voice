@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+var fs = require('fs'),
+    sys= require('sys');
+
+exports.load = function load(filename) {
+    var content = fs.readFileSync(filename, 'utf-8');
+    return JSON.parse(content);
+}
