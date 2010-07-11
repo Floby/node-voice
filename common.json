@@ -1,7 +1,7 @@
 {
     "local_port": 6000,
     "host_real_name": "Floby",
-    "cmd_template": "espeak -p30 -s100 %s",
+    "cmd_template": "espeak -p30 -s100 %s -v %v",
     "welcome_phrase": "Welcome on %n's voice server. Type in some informations and then make his computer speak =)"
 }
 
