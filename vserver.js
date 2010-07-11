@@ -5,8 +5,7 @@ var sys = require('sys'),
     cfg = require('./config'),
      cp = require('child_process');
 
-var homedir = process.env.VOICESERVER_HOME;
-homedir = '.';
+var homedir = process.env.VOICESERVER_HOME || '.';
 var config = cfg.loadJsonSync(homedir+'/common.json');
 
 var VoiceServer;
