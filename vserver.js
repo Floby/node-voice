@@ -7,17 +7,18 @@ var sys = require('sys'),
      cp = require('child_process');
 
 var homedir = process.env.VOICESERVER_HOME || '.';
-sys.puts(sys.inspect(lang));
 var config = cfg.loadJsonSync(homedir+'/common.json');
 
 var VoiceServer;
 VoiceServer = net.createServer(function(socket) {
-    socket.setEncoding('utf-8');
+    socket.setEncoding('utf8');
     socket.expect = 'name';
-    socket.write(config.welcome_phrase.replace("%n", config.host_real_name)+"\n");
+    socket.write(config.welcome_phrase
+		.replace("%n", config.host_real_name)+"\n");
     socket.write("Name: ");
     sys.puts("receiving connection from "+socket.remoteAddress);
-    socket.addListener('data', function(data) {
+    socket.on('end', function() {socket.end(); });
+    socket.on('data', function(data) {
 	data = data.replace(/(\n|\r)/g, "");
 	if(socket.expect == 'name') {
 	    socket.name = data;
@@ -27,7 +28,8 @@ VoiceServer = net.createServer(function(socket) {
 	else if (socket.expect == 'lang') {
 	    socket.lang = lang.getId(data);
 	    delete socket.expect;
-	    sys.puts(socket.name+'('+socket.lang+') connected from '+socket.remoteAddress);
+	    sys.puts(socket.name+'('+socket.lang+') connected from '
+		    + socket.remoteAddress);
 	    socket.write("say: ");
 	}
 	else {
@@ -38,7 +40,8 @@ VoiceServer = net.createServer(function(socket) {
 	    }
 	    data = data.replace(/["`()\\]/g, "");
 	    sys.puts(socket.name+'('+socket.lang+') says: '+data);
-	    var cmd = config.cmd_template.replace("%s", '"'+data+'"').replace("%v", socket.lang);
+	    var cmd = config.cmd_template.replace("%s", '"'+data+'"')
+			.replace("%v", socket.lang);
 	    cp.exec(cmd);
 	    socket.write("say: ");
 	}
