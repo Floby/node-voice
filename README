@@ -1,0 +1,15 @@
+You'll need node >= 0.2.0
+and espeak 
+
+to launch the server
+    node vserver.js
+or
+    ./vserver.js
+
+by default, it listens on port 6000 see common.json to change it
+
+
+to connect to the server, you can use telnet for example:
+    telnet localhost 6000
+    telnet myhostname 6000
+
