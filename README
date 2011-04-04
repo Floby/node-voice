@@ -9,7 +9,7 @@ or
 by default, it listens on port 6000 see common.json to change it
 
 
-to connect to the server, you can use telnet for example:
+to connect to the server, you can use telnet or netcat for example:
     telnet localhost 6000
-    telnet myhostname 6000
+    netcat myhostname 6000
 
